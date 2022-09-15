@@ -97,4 +97,4 @@ final Manager = Provider((ref) {
       botProviders, (_, _1) => processOrder(orderController, botController));
 });
 
-//listen will not refresh entire provider, but watch does
+//listen will not rerun entire provider's code, but watch does

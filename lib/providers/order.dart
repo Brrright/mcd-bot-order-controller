@@ -12,6 +12,8 @@ class Order {
     required this.orderType,
     this.orderStatus = 'pending',
   });
+
+  get isCompleted => orderStatus == 'complete';
 }
 
 // StateNotifier
@@ -100,7 +102,7 @@ class OrderController extends StateNotifier<List<Order>> {
   }
 }
 
-// "StateNotifierProvider"
+// "StateNotifierProvider" - can use method to change the state
 final orderProviders =
     StateNotifierProvider<OrderController, List<Order>>((ref) {
   // state notifier provider receive the ordercontrolller class and the list of order
@@ -111,8 +113,11 @@ final orderProviders =
 // --"Provider"--
 // completed orders
 final completedOrdersProviders = Provider((ref) {
-  final orders = ref.watch(orderProviders);
-  return orders.where((order) => order.orderStatus == 'complete');
+  // ref.watch(orderProviders);
+  // return ref.read(orderProviders.notifier).getCompletedOrders;
+  return ref
+      .watch(orderProviders)
+      .where((order) => order.orderStatus == 'complete');
 });
 
 // vip orders
